@@ -1,3 +1,3 @@
 # BRIDGE
 Bridge for connect web apps with PHP
-![alt text](https://github.com/[username]/[reponame]/blob/main/bridge.png?raw=true)
+![alt text](https://github.com/stdincl/bridge/blob/main/bridge.png?raw=true)
