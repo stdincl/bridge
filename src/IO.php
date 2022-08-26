@@ -109,7 +109,7 @@ class IO {
 		return array_keys($json['autoload']['psr-4'])[0];
 	}
 	public static function settingsDirectory(){
-		return IO::root().'/io';
+		return IO::root().'/bridge';
 	}
 	public static function settings(){
 		if(is_null(IO::$settings)){
@@ -155,7 +155,7 @@ class IO {
 	}
 	public static function log($text){
 		file_put_contents(
-			IO::root().'/io/tmp/log',
+			IO::root().'/bridge/tmp/log',
 			$text."\n",
 			FILE_APPEND
 		);
@@ -200,7 +200,7 @@ class IO {
 					$data .= $t['file'].':'.$t['line']."\n";
 				}
 			}
-			file_put_contents(IO::root().'/io/tmp/log/.debug', $data,FILE_APPEND);
+			file_put_contents(IO::root().'/bridge/tmp/log/.debug', $data,FILE_APPEND);
 		}
 	}
 	public static function googleMapsScript(){
