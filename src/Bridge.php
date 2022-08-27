@@ -5,8 +5,8 @@ use stdincl\bridge\IO;
 use stdincl\bridge\Check; 
 
 class Bridge { 
-	public static $classNameKey = '_io_framework_class_name_key';
-	public static $methodNameKey = '_io_framework_method_class_name_key';
+	public static $classNameKey = '_bridge_framework_class_name_key';
+	public static $methodNameKey = '_bridge_framework_method_class_name_key';
 	public static function connect(){
 		header('Content-Type:application/json');
 		if(isset($_SERVER['HTTP_AUTH'])){
@@ -55,9 +55,9 @@ class Bridge {
 	}
 	public static function reflectionRequestIsValid($className,$classMethodName){
 		return (
-			Bridge::isValidClassName($s)
+			Bridge::isValidClassName($className)
 			&&
-			Bridge::isValidClassMethodName($m)
+			Bridge::isValidClassMethodName($classMethodName)
 		);
 	}
 	public static function isValidClassName($className){
