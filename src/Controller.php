@@ -11,8 +11,12 @@ class Controller {
 		if(method_exists($c,$searchM)){
 			return call_user_func_array($c.'::'.$searchM,$a);
 		}else{
-			header('IONotFound: '.$c.'::'.$m);
-			IO::exception('.method-not-found');
+			IO::exception(
+				'.method-not-found',
+				array(
+					'method-name'=>$c.'::'.$m
+				)
+			);
 		}
     }
 }

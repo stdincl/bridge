@@ -2,7 +2,7 @@
 namespace stdincl\bridge;
 
 use stdincl\bridge\SQL;
-use Composer\Factory;
+use stdincl\bridge\BridgeException;
 
 class IO {
 	static $lang = null;
@@ -146,9 +146,15 @@ class IO {
 	public static function media(){
 		return IO::root().'/media';
 	}
-    public static function exception($code){
-		IO::debug($code);
-    	throw new \Exception(print_r($code,1));
+    public static function exception($error,$customHeaders=array()){
+		IO::debug($error);
+		$customHeaders = is_array($customHeaders)?array():$customHeaders;
+		$e = new BridgeException($error);
+		foreach($customHeaders as $key=>$value){
+			header('x-bridge-'.$key': '.$value);
+			$e->addParameter($key,$value);
+		}
+    	throw $e;
 	}
     public static function denied(){
 		IO::exception('.denied');

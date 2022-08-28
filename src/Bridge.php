@@ -1,8 +1,10 @@
 <?php
 namespace stdincl\bridge;
 
+use stdincl\bridge\T;
 use stdincl\bridge\IO;
-use stdincl\bridge\Check; 
+use stdincl\bridge\Check;
+use stdincl\bridge\BridgeException;
 
 class Bridge { 
 	public static $classNameKey = '_bridge_framework_class_name_key';
@@ -27,24 +29,35 @@ class Bridge {
 			$reflector = new \ReflectionClass($className);
 			try{
 				$reflectorMethod = $reflector->getMethod('_'.$methodName);
-			}catch(\Exception $e){
-				IO::exception('.method-not-found');
+			}catch(BridgeException $e){
+				IO::exception(
+					'.method-not-found',
+					array(
+						'method-name'=>$c.'::'.$m
+					)
+				);
 			}
 			$reflectorMethodParameters = $reflectorMethod->getParameters();
 			$executionParameters = array();
 			foreach($reflectorMethodParameters as $i=>$reflectorMethodParameter){
 				$executionParameters[] = $requestParameters[$reflectorMethodParameter->name];
 			}
-			$result = array(
-				's'=>'1',
-				'c'=>200,
-				'm'=>call_user_func_array(
-					$className.'::_'.$methodName,
-					$executionParameters
-				)
+			$result = call_user_func_array(
+				$className.'::_'.$methodName,
+				$executionParameters
 			);
-		}catch(\Exception $e){
-			$result = (array('s'=>'0','c'=>$e->getMessage(),'m'=>str_replace("'",'',IO::_($e->getMessage()))));
+			http_response_code(200);
+		}catch(BridgeException $e){
+			$error_code = str_replace("'",'',$e->getMessage());
+			$error = $error_code;
+			foreach($e->getParameters() as $param=>$value){
+				$error = str_replace('<:'.$param.':>', str_replace("'",'',$value), $error);
+			}
+			$result = array(
+				'error_code'=>$error_code,
+				'error'=>$error
+			);
+			http_response_code(400);
 		}
 		$jsonResult = json_encode(
 			$result,
