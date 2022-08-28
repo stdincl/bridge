@@ -11,10 +11,10 @@ class BridgeException extends \Exception {
     public function addParameter($param,$value){
     	$this->params[$param] = $value;
     }
-    public function removeParameter($param,$value){
+    public function removeParameter($param){
     	unset($this->params[$param]);
     }
-    public function getParameters($param,$value){
+    public function getParameters(){
     	return $this->params;
     }
 }
