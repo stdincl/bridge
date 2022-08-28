@@ -29,7 +29,7 @@ class Bridge {
 			$reflector = new \ReflectionClass($className);
 			try{
 				$reflectorMethod = $reflector->getMethod('_'.$methodName);
-			}catch(BridgeException $e){
+			}catch(\Exception $e){
 				IO::exception(
 					'.method-not-found',
 					array(
@@ -74,10 +74,10 @@ class Bridge {
 		);
 	}
 	public static function isValidClassName($className){
-		return Check::onlyChars($className,'abcdefghijklmnopqrstuvwxyz0123456789');
+		return Check::onlyChars($className,'\abcdefghijklmnopqrstuvwxyz0123456789');
 	}
 	public static function isValidClassMethodName($classMethodName){
-		return Check::onlyChars($classMethodName,'abcdefghijklmnopqrstuvwxyz0123456789_');
+		return Check::onlyChars($classMethodName,'\abcdefghijklmnopqrstuvwxyz0123456789_');
 	}
 }
 ?>
