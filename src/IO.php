@@ -148,7 +148,7 @@ class IO {
 	}
     public static function exception($error,$customHeaders=array()){
 		IO::debug($error);
-		$customHeaders = is_array($customHeaders)?array():$customHeaders;
+		$customHeaders = is_array($customHeaders)?$customHeaders:array();
 		$e = new BridgeException($error);
 		foreach($customHeaders as $key=>$value){
 			header('x-bridge-'.$key.': '.$value);
