@@ -49,7 +49,7 @@ class Bridge {
 			http_response_code(200);
 		}catch(BridgeException $e){
 			$error_code = str_replace("'",'',$e->getMessage());
-			$error = $error_code;
+			$error = T::_($error_code);
 			foreach($e->getParameters() as $param=>$value){
 				$error = str_replace('<:'.$param.':>', str_replace("'",'',$value), $error);
 			}
