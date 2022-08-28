@@ -33,7 +33,7 @@ class Bridge {
 				IO::exception(
 					'.method-not-found',
 					array(
-						'method-name'=>$c.'::'.$m
+						'method-name'=>$className.'::'.$methodName
 					)
 				);
 			}
@@ -74,10 +74,10 @@ class Bridge {
 		);
 	}
 	public static function isValidClassName($className){
-		return Check::onlyChars($s,'abcdefghijklmnopqrstuvwxyz0123456789');
+		return Check::onlyChars($className,'abcdefghijklmnopqrstuvwxyz0123456789');
 	}
 	public static function isValidClassMethodName($classMethodName){
-		return Check::onlyChars($s,'abcdefghijklmnopqrstuvwxyz0123456789_');
+		return Check::onlyChars($classMethodName,'abcdefghijklmnopqrstuvwxyz0123456789_');
 	}
 }
 ?>

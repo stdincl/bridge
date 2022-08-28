@@ -33,7 +33,7 @@ class Check {
 		}
 		$cantidad = strlen($rut_sin_guion);
 		for ( $i = 0; $i < $cantidad; $i++){
-			$rut_array[$i] = $rut_sin_guion{$i};
+			$rut_array[$i] = $rut_sin_guion[$i];
 		}
 		$i = ($cantidad-1);
 		$x=$i;
