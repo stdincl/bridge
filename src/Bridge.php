@@ -26,8 +26,8 @@ class Bridge {
 			if(!Bridge::reflectionRequestIsValid($className,$methodName)){
 				IO::exception('.denied');
 			}
-			$reflector = new \ReflectionClass($className);
 			try{
+				$reflector = new \ReflectionClass($className);
 				$reflectorMethod = $reflector->getMethod('_'.$methodName);
 			}catch(\Exception $e){
 				IO::exception(
