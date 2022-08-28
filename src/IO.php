@@ -151,7 +151,7 @@ class IO {
 		$customHeaders = is_array($customHeaders)?array():$customHeaders;
 		$e = new BridgeException($error);
 		foreach($customHeaders as $key=>$value){
-			header('x-bridge-'.$key': '.$value);
+			header('x-bridge-'.$key.': '.$value);
 			$e->addParameter($key,$value);
 		}
     	throw $e;
