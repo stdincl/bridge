@@ -56,7 +56,7 @@ class SQL {
 	public static function query($q,$i=''){
 		$settings = IO::settings();
 		if($settings['debug']===true){
-			file_put_contents(IO::root().'/io/tmp/.sql-debug', $q."\n",FILE_APPEND);
+			file_put_contents(IO::root().'/bridge/tmp/.sql-debug', $q."\n",FILE_APPEND);
 		}
 		$r = SQL::resultToArray(SQL::exe($q));
 		return ($i!='')?SQL::standardObjectResult(array_column($r,null,$i)):$r;
