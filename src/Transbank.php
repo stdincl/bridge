@@ -13,9 +13,9 @@ class Transbank extends Controller {
 		$data,
 		$result
 	){
-		$logfile = IO::root().'/io/tmp/tbklog/'.date('Y-m-d-H:m:s').'.'.random_int(0, 10000000000).'.log';
+		$logfile = IO::root().'/bridge/tmp/tbklog/'.date('Y-m-d-H:m:s').'.'.random_int(0, 10000000000).'.log';
 		while (file_exists($logfile)){
-			$logfile = IO::root().'/io/tmp/tbklog/'.date('Y-m-d-H:m:s').'.'.random_int(0, 10000000000).'.log';
+			$logfile = IO::root().'/bridge/tmp/tbklog/'.date('Y-m-d-H:m:s').'.'.random_int(0, 10000000000).'.log';
 		}
 		@file_put_contents(
 			$logfile, 

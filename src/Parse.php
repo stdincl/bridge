@@ -133,9 +133,9 @@ class Parse {
 					);
 				}
 			}
-			$tempPath = IO::root().'/io/tmp/'.rand(10000000,10000000000).time().'.tmp';
+			$tempPath = IO::root().'/bridge/tmp/'.rand(10000000,10000000000).time().'.tmp';
 			while (file_exists($tempPath)) {
-				$tempPath = IO::root().'/io/tmp/'.rand(10000000,10000000000).time().'.tmp';
+				$tempPath = IO::root().'/bridge/tmp/'.rand(10000000,10000000000).time().'.tmp';
 			}
 			move_uploaded_file($f['tmp_name'], $tempPath);
 			$f = $tempPath;
