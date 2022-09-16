@@ -23,7 +23,6 @@ class SQL {
 			}
 			mysqli_set_charset(SQL::$conexion,'utf8mb4_unicode_ci');
 			mysqli_query(SQL::$conexion,"SET NAMES 'utf8mb4_unicode_ci'");
-			# mysqli_query(SQL::$conexion,"SET time_zone = '-3:00'");
 		}
 		return SQL::$conexion;
 	}	

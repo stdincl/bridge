@@ -8,16 +8,16 @@ class Flow {
 	public static function createPayent($data){
 		/*
 			$data = array(
-						"commerceOrder" => rand(1100,2000),
-						"subject" => "Pago de prueba",
-						"currency" => "CLP",
-						"amount" => 5000,
-						"email" => "cliente@gmail.com",
-						"paymentMethod" => 9,
-						"urlConfirmation" => Config::get("BASEURL") . "/examples/payments/confirm.php",
-						"urlReturn" => Config::get("BASEURL") ."/examples/payments/result.php",
-						"optional" => $optional
-					);
+				"commerceOrder" => rand(1100,2000),
+				"subject" => "Pago de prueba",
+				"currency" => "CLP",
+				"amount" => 5000,
+				"email" => "cliente@host.io",
+				"paymentMethod" => 9,
+				"urlConfirmation" => Config::get("BASEURL") . "/examples/payments/confirm.php",
+				"urlReturn" => Config::get("BASEURL") ."/examples/payments/result.php",
+				"optional" => $optional
+			);
 		*/
 		$flowApi = new Flow();
 		return $flowApi->send(
