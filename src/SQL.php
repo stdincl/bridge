@@ -6,6 +6,18 @@ use stdincl\bridge\IO;
 class SQL {
 	public static $count=0;
 	public static $conexion;
+	# Override mysql configuration using bridge/settings.json@databases.{$select} if exists
+	public static function use($select){
+		$settings = IO::settings();
+		if(
+			isset($settings['databases']) 
+			&& 
+			isset($settings['databases'][$select])
+		){
+			$settings['mysql'] = $settings['databases'][$select];
+			IO::$settings = $settings;
+		}
+	}
 	public static function on(){
 		$settings = IO::settings();
 		if(SQL::$conexion){}else{
@@ -30,7 +42,7 @@ class SQL {
 		if(SQL::$conexion){
 			mysqli_close(SQL::$conexion);
 		}
-	}		
+	}
 	public static function begin(){
 		return mysqli_query(SQL::on(),'BEGIN');
 	}		
