@@ -15,7 +15,10 @@ class SQL {
 			isset($settings['databases'][$select])
 		){
 			$settings['mysql'] = $settings['databases'][$select];
+			# override current settings
 			IO::$settings = $settings;
+			# force reconnect in next query
+			SQL::$conexion = null;
 		}
 	}
 	public static function on(){
