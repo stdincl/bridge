@@ -11,6 +11,10 @@ class Bridge {
 	public static $methodNameKey = '_bridge_framework_method_class_name_key';
 	public static function connect(){
 		header('Content-Type:application/json');
+		if($_SERVER['REQUEST_METHOD']=='OPTIONS'){
+			http_response_code(200);
+			return;
+		}
 		if(isset($_SERVER['HTTP_AUTH'])){
 			$_SERVER['HTTP_AUTH'] = explode(' ', $_SERVER['HTTP_AUTH']);
 			IO::session($_SERVER['HTTP_AUTH'][0],$_SERVER['HTTP_AUTH'][1]);
