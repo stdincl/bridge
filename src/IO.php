@@ -186,10 +186,14 @@ class IO {
 		if(!isset($settings['session'][$name])){
 			IO::exception('.log-out');
 		}
+		$token = IO::session($name);
+		if($token==''){
+			IO::exception('.not-found');
+		}
 		IO::$users[$name] = SQL::queryOne(
 			str_replace(
 				'<:session:>',
-				IO::session($name),
+				$token,
 				$settings['session'][$name]
 			)
 		);
