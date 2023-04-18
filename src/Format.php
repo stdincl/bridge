@@ -20,6 +20,7 @@ class Format {
 		$name = str_replace('ó', 'o', $name);
 		$name = str_replace('ú', 'u', $name);
 		$name = str_replace('ñ', 'n', $name);
+		$name = str_replace('Ñ', 'n', $name);
 		$name = str_replace(' ', '-', $name);
 		$name = preg_replace("/[^a-z0-9-.]+/i", '', $name);
 		return $name;
