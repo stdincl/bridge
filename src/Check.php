@@ -13,6 +13,7 @@ class Check {
 		return filter_var($dato, FILTER_VALIDATE_EMAIL);
 	}
 	public static function isRut($rut){
+		$rut = str_replace('.','',$rut);
 		if(strlen($rut) > 10){
 			return false;
 		}

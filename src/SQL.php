@@ -102,7 +102,7 @@ class SQL {
 		if(method_exists(get_called_class(),$m)){
 			IO::denied();
 		}
-		return SQL::fn($m.'('.implode(array_map(function($v){ return '\''.$v.'\''; },$a),',').')');
+		return SQL::fn($m.'('.implode(',',array_map(function($v){ return '\''.$v.'\''; },$a)).')');
     }
 }
 ?>

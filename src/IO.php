@@ -175,8 +175,8 @@ class IO {
 		if(!is_null($val)){ 
 			$_SESSION[$settings['sessionkey']][$var] = serialize($val); 
 		}
-		if(isset($_SERVER['USRS'][$var])){
-			unset($_SERVER['USRS'][$var]);
+		if(isset($_SERVER[$settings['sessionkey']][$var])){
+			unset($_SERVER[$settings['sessionkey']][$var]);
 		}
 		return unserialize($_SESSION[$settings['sessionkey']][$var]);
 	}
