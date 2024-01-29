@@ -29,6 +29,13 @@ class Parse {
 			}
 		}
 	}
+	public static function time(&...$li){
+		foreach ($li as $i => &$e) {
+			if(!preg_match("/^([0-9]{1,2}):([0-9]{1,2})$/",$e,$r)){
+				IO::exception('.time-format-invalid');
+			}
+		}
+	}
 	public static function date(&...$li){
 		foreach ($li as $i => &$e) {
 			$isValid = false;
