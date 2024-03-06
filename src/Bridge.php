@@ -56,8 +56,13 @@ class Bridge {
 			$error = T::_($error_code,$e->getParameters());
 			$result = array(
 				'error_code'=>$error_code,
-				'error'=>$error
+				'error'=>$error,
+				'error_info'=>array()
 			);
+			$result['error_info'] = array();
+			foreach ($e->getParameters() as $name=>$value){
+				$result['error_info'][$name] = $value;
+			}
 			http_response_code(400);
 		}
 		$jsonResult = json_encode(

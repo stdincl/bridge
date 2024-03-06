@@ -1,6 +1,6 @@
 {
     "name": "stdincl/bridge",
-    "version":"2.0.7",
+    "version":"2.1.0",
     "description": "Bridge to connect web apps with PHP services",
     "authors": [
         {

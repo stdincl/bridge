@@ -45,7 +45,6 @@ class Transbank extends Controller {
 			CURLOPT_URL, 
 			$settings[$settingsKey][$settings[$settingsKey]['mode']]['url'].$action
 		);
-		// curl_setopt($ch, CURLOPT_POST, true);
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 	    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
@@ -74,7 +73,7 @@ class Transbank extends Controller {
 		}
 		$result = json_decode($result,true);
 
-		if(json_last_error()=='JSON_ERROR_NONE'){
+		if(json_last_error()==JSON_ERROR_NONE){
 			if($result['error_message']){
 	    		file_put_contents($logfile,"\n".'error: '.print_r($result,1),FILE_APPEND);
 				IO::exception($result['error_message']);
