@@ -36,8 +36,10 @@ class SQL {
 			if(mysqli_connect_error()){
 				IO::exception('.connection-error');
 			}
-			mysqli_set_charset(SQL::$conexion,'utf8mb4_unicode_ci');
-			mysqli_query(SQL::$conexion,"SET NAMES 'utf8mb4_unicode_ci'");
+			if($settings['mysql']['encoding']!=''){
+				mysqli_set_charset(SQL::$conexion,$settings['mysql']['encoding']);
+				mysqli_query(SQL::$conexion,"SET NAMES '".$settings['mysql']['encoding']."'");
+			}
 		}
 		return SQL::$conexion;
 	}	
@@ -89,8 +91,10 @@ class SQL {
 	}
 	public static function resultToArray($q){
 		$o = array();
-		while( $r = mysqli_fetch_assoc($q) ) {
-			$o[] = $r;
+		if(gettype($q)=='object'){
+			while( $r = mysqli_fetch_assoc($q) ) {
+				$o[] = $r;
+			}
 		}
 		return $o;
 	}
