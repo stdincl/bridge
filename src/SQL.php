@@ -56,7 +56,11 @@ class SQL {
 	}
 	public static function exe($Q){
 		SQL::$count++;
-        $res = mysqli_query(SQL::on(),$Q);
+		try {
+        	$res = mysqli_query(SQL::on(),$Q);
+		} catch (\Exception $e) {
+            IO::exception($e->getMessage());
+		}
         if($res){
             return $res;
         }else{
