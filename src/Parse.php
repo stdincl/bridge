@@ -55,6 +55,15 @@ class Parse {
 	    	}
 		}
 	}
+	public static function id(&...$li){
+		foreach ($li as $i=>&$n) {
+			$n = preg_replace('/[^0-9-]/','',$n);
+			$n = $n==''?0:$n;
+			if($n<=0){
+				IO::exception('incorrect-id');
+			}
+	    }
+	}
 	public static function int(&...$li){
 		foreach ($li as $i=>&$n) {
 			$n = preg_replace('/[^0-9-]/','',$n);
