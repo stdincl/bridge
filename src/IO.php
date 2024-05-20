@@ -148,16 +148,14 @@ class IO {
 	}
     public static function exception($error,$customHeaders=array()){
 		$customHeaders = is_array($customHeaders)?$customHeaders:array();
-		if(isset($customHeaders[0])){
-			$error['_error_'] = array();	
-			foreach($customHeaders as $key=>$value){
-				header('x-bridge-'.$key.': '.$value);
-				$error['_bridge_']['x-bridge-'.$key] = $value;
-				$e->addParameter($key,$value);
-			}
-		}
-		IO::debug($error);
 		$e = new BridgeException($error);
+		$error = array();	
+		foreach($customHeaders as $key=>$value){
+			header('x-bridge-'.$key.': '.$value);
+			$e->addParameter($key,$value); 
+			$error[$key] = $value; 
+		}
+		IO::debug($error); 
     	throw $e;
 	}
     public static function denied(){
