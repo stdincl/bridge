@@ -72,7 +72,17 @@ class Parse {
 	}
 	public static function bool(&...$li){
 		foreach ($li as $i=>&$b) {
-			$b = ($b>0||$b==='on')?1:0;
+			$b = (
+				$b==='1'
+				||
+				$b===1
+				||
+				$b==='on'
+				||
+				$b==='true'
+				||
+				$b===true
+			)?1:0;
 	    }
 	}
 	public static function float(&...$li){
