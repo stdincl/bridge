@@ -66,7 +66,14 @@ class Parse {
 	}
 	public static function rut(&...$li){
 		foreach ($li as $i=>&$rut) {
-			$rut = preg_replace('/[^0-9k-]/','',$rut);
+			$rut = preg_replace('/[^0-9k]/','',$rut);
+			$rut = str_split($rut);
+			if(!isset($rut[1])){
+				IO::exception('.rut-invalid-format');
+			}
+			$rut[] = $rut[count($rut)-1];
+			$rut[count($rut)-2] = '-';
+			$rut = implode('',$rut);
 			if(!Check::isRut($rut)){
 				IO::exception('.rut-invalid-format');
 			}
