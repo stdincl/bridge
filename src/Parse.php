@@ -57,10 +57,18 @@ class Parse {
 	}
 	public static function id(&...$li){
 		foreach ($li as $i=>&$n) {
-			$n = preg_replace('/[^0-9-]/','',$n);
+			$n = preg_replace('/[^0-9]/','',$n);
 			$n = $n==''?0:$n;
 			if($n<=0){
 				IO::exception('incorrect-id');
+			}
+	    }
+	}
+	public static function rut(&...$li){
+		foreach ($li as $i=>&$rut) {
+			$rut = preg_replace('/[^0-9k-]/','',$rut);
+			if(!Check::isRut($rut)){
+				IO::exception('.rut-invalid-format');
 			}
 	    }
 	}
