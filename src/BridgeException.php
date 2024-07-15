@@ -6,7 +6,7 @@ use stdincl\bridge\IO;
 class BridgeException extends \Exception {
 	public $params = array();
 	public function __construct($message,$code=0,\Exception $previous=null){
-        parent::__construct($message,$code,$previous);
+        parent::__construct(print_r($message,1),$code,$previous);
     }
     public function addParameter($param,$value){
     	$this->params[$param] = $value;

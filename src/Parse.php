@@ -57,9 +57,9 @@ class Parse {
 	}
 	public static function code($length,&...$codes){
 		foreach ($codes as $i=>&$code) {
-			$code = preg_replace('/[^0-9-]/','',$code);
+			$code = preg_replace('/[^a-zA-Z0-9-]/','',$code);
 			$code = ($code==''?0:$code).'';
-			if( strlen($code)>$length){
+			if(strlen($code)>$length){
 				IO::exception('incorrect-code-format',array(
 					'length-required'=>$length,
 					'length-receibed'=>strlen($code)
