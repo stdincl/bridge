@@ -1,7 +1,7 @@
 <?php
-namespace stdincl\bridge;
+namespace stdincl\bridge\util;
 
-use stdincl\bridge\Parse;
+use stdincl\bridge\util\Parse;
 
 class Format {
 	public static function money($v,$currentSymbol=''){

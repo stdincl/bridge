@@ -1,31 +1,28 @@
 <?php
-namespace stdincl\bridge;
+namespace stdincl\bridge\database;
 
-use stdincl\bridge\IO;
+use stdincl\bridge\Environment;
 
 class SQL {
 	public static $count=0;
 	public static $conexion;
 	# Override mysql configuration using bridge/settings.json@databases.{$select} if exists
 	public static function use($select){
-		$settings = IO::settings();
+		$settings = Environment::get()->settings();
 		if(
 			isset($settings['databases']) 
 			&& 
 			isset($settings['databases'][$select])
 		){
 			$settings['mysql'] = $settings['databases'][$select];
-			# override current settings
-			IO::$settings = $settings;
-			# force reconnect in next query
 			SQL::$conexion = null;
 		}
 	}
 	public static function on(){
-		$settings = IO::settings();
+		$settings = Environment::get()->settings();
 		if(SQL::$conexion){}else{
 			if($settings['mysql']['database']==''){
-				IO::exception('.no-database');
+				throw new BridgeException('.no-database');
 			}
 			SQL::$conexion = mysqli_connect(
 				$settings['mysql']['hostname'], 
@@ -34,7 +31,7 @@ class SQL {
 				$settings['mysql']['database']
 			);
 			if(mysqli_connect_error()){
-				IO::exception('.connection-error');
+				throw new BridgeException('.connection-error');
 			}
 			if($settings['mysql']['encoding']!=''){
 				mysqli_set_charset(SQL::$conexion,$settings['mysql']['encoding']);
@@ -59,12 +56,12 @@ class SQL {
 		try {
         	$res = mysqli_query(SQL::on(),$Q);
 		} catch (\Exception $e) {
-            IO::exception($e->getMessage());
+            throw new BridgeException($e->getMessage());
 		}
         if($res){
             return $res;
         }else{
-            IO::exception(mysqli_error(SQL::on()));
+            throw new BridgeException(mysqli_error(SQL::on()));
         }
 	}
 	public static function standardObjectResult($result){
@@ -74,10 +71,6 @@ class SQL {
 		return $result;
 	}
 	public static function query($q,$i=''){
-		$settings = IO::settings();
-		if($settings['debug']===true){
-			file_put_contents(IO::root().'/bridge/tmp/.sql-debug', $q."\n",FILE_APPEND);
-		}
 		$r = SQL::resultToArray(SQL::exe($q));
 		return ($i!='')?SQL::standardObjectResult(array_column($r,null,$i)):$r;
 	}
@@ -86,7 +79,7 @@ class SQL {
 		if(!is_null($r[0])){ 
 			return isset($paran)?$r[0][$paran]:$r[0]; 
 		}
-		IO::exception('.not-found');
+		throw new BridgeException('.not-found');
 	}
 	
 	public static function fn($Q){
@@ -106,11 +99,13 @@ class SQL {
 		return mysqli_insert_id(SQL::on());
 	}
 
-	public static function __callStatic($m,$a){
-		if(method_exists(get_called_class(),$m)){
-			IO::denied();
+	public static function __callStatic($methodName,$arguments){
+		if(method_exists(get_called_class(),$methodName)){
+			throw new BridgeException('.sql-function-not-found',[
+				'function'=>$methodName
+			]);
 		}
-		return SQL::fn($m.'('.implode(',',array_map(function($v){ return '\''.$v.'\''; },$a)).')');
+		return SQL::fn($methodName.'('.implode(',',array_map(function($argument){ return '\''.$argument.'\''; },$arguments)).')');
     }
 }
 ?>

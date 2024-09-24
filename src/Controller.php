@@ -1,21 +1,34 @@
 <?php
 namespace stdincl\bridge;
 
-use stdincl\bridge\IO;
+use stdincl\bridge\exception\BridgeException;
 
-session_start();
 class Controller {
-	public static function __callStatic($m,$a){
-		$searchM = '_'.$m;
-		$c = get_called_class();
-		if(method_exists($c,$searchM)){
-			return call_user_func_array($c.'::'.$searchM,$a);
+	private $request = null;
+	public function __construct($request){
+		$this->setRequest($request);
+	}
+	public function setRequest($request){
+		$this->request = $request;
+	}
+	public function getRequest(){
+		return $this->request;
+	}
+	public static function __call($methodName,$arguments){
+		$className = get_called_class();
+		$methodName = '_'.$methodName;
+		if(method_exists($className,$methodName)){
+			return call_user_func_array([
+				$this,
+				$methodName
+			],$arguments);
 		}else{
-			IO::exception(
+			throw new BridgeException(
 				'.method-not-found',
-				array(
-					'method-name'=>$c.'::'.$m
-				)
+				[
+					'class-name'=>$className,
+					'method-name'=>$methodName
+				]
 			);
 		}
     }

@@ -1,5 +1,5 @@
 <?php
-namespace stdincl\bridge;
+namespace stdincl\bridge\util;
 
 
 class Check {

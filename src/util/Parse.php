@@ -1,9 +1,8 @@
 <?php
-namespace stdincl\bridge;
+namespace stdincl\bridge\util;
 
 use stdincl\bridge\IO;
-use stdincl\bridge\Check;
-use stdincl\bridge\Image;
+use stdincl\bridge\util\Check;
 
 class Parse {
 	public static function string(&...$li){
@@ -124,8 +123,7 @@ class Parse {
 			$s = addslashes(base64_decode(str_replace(' ','+', $s)));
 		}
 	}
-	public static function blob(&$f,$formatosPermitidos=array(),$autoResizeTo=0){ 
-		Parse::int($autoResizeTo);
+	public static function blob(&$f,$formatosPermitidos=array()){ 
 		if($f['error']==1){
 			IO::exception(str_replace('<:size:>', ini_get('upload_max_filesize'), IO::_('.upload-max-size-exceeded')));
 		}
@@ -149,11 +147,6 @@ class Parse {
 							)
 						)
 					);
-				}
-			}
-			if($autoResizeTo>0){
-				if(Check::isExtension($f['name'],array('jpeg','png'))){
-					$file = Image::Cuadro($autoResizeTo,$file,true);  
 				}
 			}
 			$f = $file;
