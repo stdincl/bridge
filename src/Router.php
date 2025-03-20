@@ -6,7 +6,19 @@ use stdincl\bridge\Reflector;
 use stdincl\bridge\Response;
 use stdincl\bridge\exception\BridgeException;
 
+/**
+ * Router es el componente inicial en la ejecución de
+ * cualquier request.
+ * 
+ * Redirecciona las peticiones a las controladores correspondientes y retorna un json
+ * 
+ * @author Diego Rodriguez Gomez
+ */
 class Router { 
+
+	/**
+	 * Constructor
+	 */
 	public function __construct(){
 		session_start();
 		header('Content-Type:application/json');
@@ -34,5 +46,6 @@ class Router {
 		header('Content-Length: '.strlen($json));
 		echo $json;
 	}
+
 }
 ?>
