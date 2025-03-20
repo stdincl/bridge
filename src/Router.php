@@ -7,7 +7,7 @@ use stdincl\bridge\Response;
 use stdincl\bridge\exception\BridgeException;
 
 class Router { 
-	public static function __construct(){
+	public function __construct(){
 		session_start();
 		header('Content-Type:application/json');
 		if($_SERVER['REQUEST_METHOD']=='OPTIONS'){

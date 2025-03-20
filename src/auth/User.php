@@ -25,7 +25,7 @@ class User {
 	public function getCredentials(){
 		return $this->credentials;
 	}
-	public static function auth(){
+	public function auth(){
 		$users = Environment::get()->settings('users');
 		if(
 			!isset($users[$this->credentials->getType()])

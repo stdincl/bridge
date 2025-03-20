@@ -14,7 +14,7 @@ class Controller {
 	public function getRequest(){
 		return $this->request;
 	}
-	public static function __call($methodName,$arguments){
+	public function __call($methodName,$arguments){
 		$className = get_called_class();
 		$methodName = '_'.$methodName;
 		if(method_exists($className,$methodName)){
