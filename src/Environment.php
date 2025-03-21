@@ -5,10 +5,13 @@ use stdincl\bridge\SQL;
 use stdincl\bridge\exception\BridgeException;
 
 class Environment {
+
 	private static $environment = null;
 	private static $settings = null;
 	private $componserConfig = null;
+
 	public function __construct(){}
+	
 	public function root(){
 		$reflection = new \ReflectionClass(\Composer\Autoload\ClassLoader::class);
 		return dirname(dirname(dirname($reflection->getFileName())));

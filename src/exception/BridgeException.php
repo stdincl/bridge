@@ -2,41 +2,29 @@
 namespace stdincl\bridge\exception;
 
 class BridgeException extends \Exception {
-	private $params = [];
-	public function __construct($message,$code=0,\Exception $previous=null,$params=[]){
+
+	private $errors = [];
+
+	public function __construct($message,$code=0,\Exception $previous=null,$errors=[]){
         parent::__construct(print_r($message,1),$code,$previous);
-        if(is_array($params)){
-            foreach($params as $paramName=>$paramValue){
-                $this->addParameter($paramName,$paramValue);
-            }
+        if(is_array($errors)){
+            $this->errors = $errors;
         }
-    }
-    public function addParameter($param,$value){
-    	$this->params[$param] = $value;
-    }
-    public function removeParameter($param){
-    	unset($this->params[$param]);
-    }
-    public function getParameters(){
-    	return $this->params;
-    }
-    public function buildResponse(){
+    } 
+    public function response(){
         $code       = $this->getMessage();
-        $params     = $this->getParameters();
-        $message    = Translator::text($code,$params);
+        $errors     = $this->errors;
+        $message    = Translator::text($code,$errors);
         return [
-            'code'=>$code,
+            'code'   =>$code,
             'message'=>$message,
-            'info'=>$params
+            'errors' =>$errors
         ];
     }
 
-    public static function defaultMessage(){
-         return [
-            'code'=>'0',
-            'message'=>'',
-            'info'=>[]
-        ];
+    public static function defaultResponse($message){
+        $exception = new BridgeException($message);
+        return $exception->response();
     }
 }
 ?>
