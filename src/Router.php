@@ -3,15 +3,13 @@ namespace stdincl\bridge;
 
 use Exception;
 
-use stdincl\bridge\Request;
 use stdincl\bridge\Reflector;
-use stdincl\bridge\Response;
 use stdincl\bridge\exception\BridgeException;
 
 /**
  * Router es el componente inicial en la ejecución de cualquier request.
- * Se encarga de capturar los detalles de la peticion usando Request, instanciar 
- * el controlador apropiado y retornar una respuesta json vàlida.
+ * Se encarga de capturar los detalles de la petición, instanciar 
+ * el controlador apropiado y retornar una respuesta json válida.
  * 
  * @author Diego Rodriguez Gomez
  */

@@ -5,9 +5,7 @@ use stdincl\bridge\exception\BridgeException;
 
 class Controller {
 
-	public function __construct(){
-		
-	}
+	public function __construct(){}
 
 	public function auth($type){
 		if(!isset($_SERVER['HTTP_AUTH'])){
