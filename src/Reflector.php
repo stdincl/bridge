@@ -10,7 +10,7 @@ use stdincl\bridge\exception\BridgeException;
 
 /**
  * Extensión de la clase nativa de reflección.
- * Su objetivo principal es usar el request capturado y usarlo como input para la clase.
+ * Su objetivo principal es usar el request capturado y usarlo como input para la clase target.
  * 
  * @author Diego Rodriguez Gomez
  */
@@ -20,13 +20,12 @@ class Reflector extends ReflectionClass {
 	 * Constructor
 	 */
 	public function __construct(){
-		# $class = getenv('BRIDGEC');
 		$class = $_SERVER['REDIRECT_BRIDGEC'];
 		if(!Check::onlyChars($class,'abcdefghijklmnopqrstuvwxyz0123456789')){
 			throw new BridgeException('class-name-is-invalid',['class'=>$class]);
 		}
 		try {
-			parent::__construct('\\'.Environment::get()->psr4().$class);
+			parent::__construct('\\api\\controllers'.$class);
 		} catch (Exception $e){
 			throw new BridgeException('class-method-not-found',['class'=>$class]);
 		}
@@ -39,7 +38,6 @@ class Reflector extends ReflectionClass {
 	 * @return ReflectionMethod
 	 */
 	public function getMethod(string $name = null){
-		# $method = getenv('BRIDGEM');
 		$method = is_null($name)?$_SERVER['REDIRECT_BRIDGEM']:$name;
 		if(!Check::onlyChars($method,'abcdefghijklmnopqrstuvwxyz0123456789_')){
 			throw new BridgeException('class-method-is-invalid',[
